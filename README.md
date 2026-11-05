@@ -1,8 +1,85 @@
 # Enterprise AI agent governance
 
-Cross-industry reference implementation for governing a custom Microsoft AI agent. It covers identity, user authentication, Microsoft Purview policy evaluation, Microsoft Agent Framework execution, allowlisted MCP tools, audit, OpenTelemetry, and Defender/Sentinel investigation.
+## What this is
+
+This is a customer-ready reference implementation for governing a custom Microsoft AI agent. It is not a production service, and installing it does not make an organization compliant with NIST, ISO, SOC 2, HIPAA, GDPR, PCI DSS, SOX, or GLBA.
+
+Use it to see, test, and adapt one control path:
+
+1. Identify the agent and the user.
+2. Check Microsoft Purview before the model runs.
+3. Run the model only if policy allows it.
+4. Call only allowlisted tools.
+5. Check the response before returning it.
+6. Record an audit event and telemetry.
+7. Hand the correlation ID to Defender or Sentinel for investigation.
+
+The runnable sample is a Python application in `src/eagov`. The rest of the repository is the surrounding kit: a permissions matrix, KQL detections, Azure deployment examples, a tenant checklist, and labeled synthetic evidence.
+
+It has two modes:
+
+| Mode | What you get | What it is not |
+| --- | --- | --- |
+| Offline synthetic | A full local run with fake users, fake policy decisions, and fake evidence | Proof that your tenant is configured |
+| Authorized test tenant | Request builders for Graph, Purview, Entra, Agent 365, and OpenTelemetry | Production-ready until you replace placeholders and complete tenant tests |
 
 This repository is original work. It uses [judeper/FSI-AgentGov-Solutions](https://github.com/judeper/FSI-AgentGov-Solutions) as architectural inspiration only. It is not a fork, and it does not copy that repository's code.
+
+## How to use it
+
+Start locally. Do not connect a tenant until the offline path makes sense.
+
+### 1. Run the sample on your machine
+
+You need Python 3.10 or later. No packages are required for the offline demo. From the repository root:
+
+```powershell
+$env:PYTHONPATH = "src"
+python -m unittest discover -s tests -v
+python examples/offline_demo.py
+python -m eagov.cli --mode offline --prompt "Summarize the public status page."
+```
+
+On macOS or Linux, set `PYTHONPATH=src` the same way. The CLI needs that path.
+
+The demo prints two outcomes: an allowed request, and a request denied because it contains `SYNTHETIC_BLOCK_TOKEN`. Both results are synthetic. They are not customer evidence.
+
+Try a denied tool as well:
+
+```powershell
+python -m eagov.cli --mode offline --tool shell_exec
+```
+
+`shell_exec` is not on the allowlist, so the gateway rejects it.
+
+### 2. Read the control path before changing it
+
+| If you want to... | Start here |
+| --- | --- |
+| Understand the design | [ARCHITECTURE.md](ARCHITECTURE.md) |
+| See the enforced order of checks | `src/eagov/workflow.py` |
+| See which Graph permissions are delegated vs application | [config/permissions-matrix.md](config/permissions-matrix.md) |
+| Review detections | `detections/` |
+| Plan a tenant rollout | [IMPLEMENTATION-ROADMAP.md](IMPLEMENTATION-ROADMAP.md) and [CUSTOMER-QUICKSTART.md](CUSTOMER-QUICKSTART.md) |
+| Decide whether it can go to production | [PRODUCTION-GATES.md](PRODUCTION-GATES.md) |
+
+### 3. Prepare an authorized test tenant
+
+Copy [config/customer.template.json](config/customer.template.json) to a file that is not committed, or store the values in a secret store. Replace every `REPLACE_WITH_*` value, including tenant ID, client ID, application ID, agent identity, Azure subscription, resource group, Azure OpenAI endpoint, model deployment, Application Insights connection string, and Sentinel workspace.
+
+Then confirm the gate refuses to call Microsoft while placeholders remain:
+
+```powershell
+python examples/tenant_demo.py
+```
+
+That command must exit without calling Graph. Only after the placeholders are gone should you grant the permissions in the matrix and follow [checklists/tenant-configuration-checklist.md](checklists/tenant-configuration-checklist.md).
+
+Optional tenant packages are listed in `requirements-tenant.txt`. They were not installed or integration-tested when this repository was created. Do not treat an import as a production sign-off.
+
+### 4. Replace the synthetic evidence
+
+`evidence/synthetic` and `TENANT-TEST-RESULTS.md` are packaging examples. Follow [REPLACE-SYNTHETIC-EVIDENCE.md](REPLACE-SYNTHETIC-EVIDENCE.md) before anyone describes a control as tested in a tenant.
 
 ## Status
 
@@ -26,23 +103,6 @@ Agent identity
 → Audit recording
 → Microsoft OpenTelemetry export
 → Defender/Sentinel investigation bundle
-```
-
-## Quick start
-
-```powershell
-$env:PYTHONPATH = "src"
-python -m unittest discover -s tests -v
-python examples/offline_demo.py
-python -m eagov.cli --mode offline --prompt "Summarize the public status page."
-```
-
-Run commands from the repository root. `PYTHONPATH=src` is required for the CLI.
-
-Tenant mode refuses to run while `REPLACE_WITH_*` values remain:
-
-```bash
-python examples/tenant_demo.py
 ```
 
 ## Layout
@@ -69,9 +129,4 @@ python examples/tenant_demo.py
 - [TROUBLESHOOTING.md](TROUBLESHOOTING.md)
 - [REPLACE-SYNTHETIC-EVIDENCE.md](REPLACE-SYNTHETIC-EVIDENCE.md)
 - [SECURITY.md](SECURITY.md)
-
-## Customer configuration
-
-Copy `config/customer.template.json` to a secret-free local file outside git, or to a secret store. Replace every `REPLACE_WITH_*` value. Required values include tenant ID, client ID, application ID, agent identity, Azure subscription, resource group, Azure OpenAI endpoint, model deployment, Application Insights connection string, and Sentinel workspace.
-
-The permissions matrix is in [config/permissions-matrix.json](config/permissions-matrix.json).
+- [config/permissions-matrix.md](config/permissions-matrix.md)
