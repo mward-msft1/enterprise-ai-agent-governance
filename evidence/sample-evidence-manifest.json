@@ -6,156 +6,157 @@
     {
       "test_id": "TST-CFG-001",
       "path": "evidence/synthetic/CFG-001-synthetic.json",
-      "sha256": "57ab5e9c7ce286dd5211711744df2945388ad72f0bef031465eb6e09f73832a8",
+      "sha256": "a738d98eb96335b5ddfe2bd19acd203c9a08a047d2ca4d7eb04b0161a3f4a0bd",
       "classification": "SYNTHETIC",
       "not_customer_evidence": true
     },
     {
       "test_id": "TST-CFG-002",
       "path": "evidence/synthetic/CFG-002-synthetic.json",
-      "sha256": "556d9d55fbfc7f88cc39f973939074c586e63b9d4c98cc0e2968285bb3abc5b3",
+      "sha256": "577d667cc2ed4f51acfffeb7bf7751eb2227c5d7d840a66615b0a87e63878367",
       "classification": "SYNTHETIC",
       "not_customer_evidence": true
     },
     {
       "test_id": "TST-CFG-003",
       "path": "evidence/synthetic/CFG-003-synthetic.json",
-      "sha256": "fb9d3c579b265f8f6a1911504c55d645840c1d3f254a3f74442dee5afcc47381",
+      "sha256": "4e9af05c16ad77fe2929422793cd4b2f67e2ed4e248b4c87c55dcb0bf810328b",
       "classification": "SYNTHETIC",
       "not_customer_evidence": true
     },
     {
       "test_id": "TST-CFG-004",
       "path": "evidence/synthetic/CFG-004-synthetic.json",
-      "sha256": "f1e8216dc9eb5067719b2a43e8222045d18dfaeba95da648362ef0768ebbb0a7",
+      "sha256": "9425d0575b17c9c6fbaea53431cc5e5ba9be6518b5b3ef9aeab25141d6a99dbb",
       "classification": "SYNTHETIC",
       "not_customer_evidence": true
     },
     {
       "test_id": "TST-CFG-005",
       "path": "evidence/synthetic/CFG-005-synthetic.json",
-      "sha256": "f4368808ec064383d6dcc3afcd0cd91b8159d6c9d5409353a794285a90ad28be",
+      "sha256": "6bc006ef96155a6e2c1f05ab9abf1622fc88b80e8253a15c9cb0949a873ab601",
       "classification": "SYNTHETIC",
       "not_customer_evidence": true
     },
     {
       "test_id": "TST-CFG-006",
       "path": "evidence/synthetic/CFG-006-synthetic.json",
-      "sha256": "939e22a0c3e2dc2d4ed8c06a4b4fda64dec468026a19808ca41a79a580103bee",
+      "sha256": "27883f3cc694463e0c460be17df82ed343fdd41e6373051fd7d8aad8603450df",
       "classification": "SYNTHETIC",
       "not_customer_evidence": true
     },
     {
       "test_id": "TST-CFG-007",
       "path": "evidence/synthetic/CFG-007-synthetic.json",
-      "sha256": "b44b3b917f5df67ac870837e80533266aca9a62d561f1d53f3dcfa85121f5499",
+      "sha256": "6f9cb4984e0ab83387f53ef44d181daa00df0248c4085f45252a5d49c6801263",
       "classification": "SYNTHETIC",
       "not_customer_evidence": true
     },
     {
       "test_id": "TST-CFG-008",
       "path": "evidence/synthetic/CFG-008-synthetic.json",
-      "sha256": "a60e040a0fbb313a4891152b6c82785bd1f6c2fbde5a8a1ceb178f454db47482",
+      "sha256": "dc3a0fd6e916fa3f369c279631d8dbdb60ed56f2d3cf93eae2cca3c823845572",
       "classification": "SYNTHETIC",
       "not_customer_evidence": true
     },
     {
       "test_id": "TST-CFG-009",
       "path": "evidence/synthetic/CFG-009-synthetic.json",
-      "sha256": "f8bbdfde7327c15c64cace8f4d44e5b90b85832588c52ac22b7739d29e5a4b49",
+      "sha256": "b059443b8725bbc6ed7a0b129b38643aaaebe17146ce503d7779b87c094cff35",
       "classification": "SYNTHETIC",
       "not_customer_evidence": true
     },
     {
       "test_id": "TST-CFG-010",
       "path": "evidence/synthetic/CFG-010-synthetic.json",
-      "sha256": "a5c9cfab2c8293224bd23eb43356037abddd9742c2cfafc2005d45103111bf0d",
+      "sha256": "daae928b2ccd735abe24c1963fd3197d657fc9967046924c401c56a848e0a3d8",
       "classification": "SYNTHETIC",
       "not_customer_evidence": true
     },
     {
       "test_id": "TST-CFG-011",
       "path": "evidence/synthetic/CFG-011-synthetic.json",
-      "sha256": "c7890605c5e235a98d6d0fa74a15efc82b87e63a8d9b03d5d8132d20ee190544",
+      "sha256": "cae8eaeb26beb48609347be020c68c7e04616d7d05fa1a265131dbb38dbe3a8e",
       "classification": "SYNTHETIC",
       "not_customer_evidence": true
     },
     {
       "test_id": "TST-CFG-012",
       "path": "evidence/synthetic/CFG-012-synthetic.json",
-      "sha256": "a6dd0a865f5297e1333875c047dd0683ff37710e06b7f375174b818ac6b48089",
+      "sha256": "9ffc322ac9de2db464cb9b228cb3420340c7b1f45a7ab2d9f745b873cd1bca7f",
       "classification": "SYNTHETIC",
       "not_customer_evidence": true
     },
     {
       "test_id": "TST-CFG-013",
       "path": "evidence/synthetic/CFG-013-synthetic.json",
-      "sha256": "e56adba440061eda8618ef9ae9f758f95347427f321e920586d369a41ef46169",
+      "sha256": "95a744e30d574410ee0b4d0c53b1f36ba87c9b7a62e5ab7da149af6e78c33756",
       "classification": "SYNTHETIC",
       "not_customer_evidence": true
     },
     {
       "test_id": "TST-CFG-014",
       "path": "evidence/synthetic/CFG-014-synthetic.json",
-      "sha256": "5ca8409be289f81c1ea509426c165cec530fab77a8ec6c9e5d51cd786f5e964e",
+      "sha256": "9fc4bb20605270cc99875a01a6526a68dac503a78dbccbd8fca858ede7050791",
       "classification": "SYNTHETIC",
       "not_customer_evidence": true
     },
     {
       "test_id": "TST-CFG-015",
       "path": "evidence/synthetic/CFG-015-synthetic.json",
-      "sha256": "369f3763c5b8c6332696679cf92d46f00b86b495df328233cde29bf7d399fb72",
+      "sha256": "ef9577c053548515ad785108124811d256f8b1dbbb20eb4f9c1bc95feeb2761b",
       "classification": "SYNTHETIC",
       "not_customer_evidence": true
     },
     {
       "test_id": "TST-CFG-016",
       "path": "evidence/synthetic/CFG-016-synthetic.json",
-      "sha256": "8ae987f3bceb507cadcdb76e40c6c79aa3e5f2c53d3babd7003010133fdb4ba6",
+      "sha256": "12070d3f7fc20c98d62b4041c1bbfd0a922552bdb9c455697f7d6bd4734fa6fe",
       "classification": "SYNTHETIC",
       "not_customer_evidence": true
     },
     {
       "test_id": "TST-CFG-017",
       "path": "evidence/synthetic/CFG-017-synthetic.json",
-      "sha256": "b5f48d5f9873efdcb91c778d0a88e9e3f4e0667af38b601e18c7bdb63f628ffb",
+      "sha256": "76fef8095ef9b32d87fa7ab60364ae31943b1472c5e14774202337fdd80d39b9",
       "classification": "SYNTHETIC",
       "not_customer_evidence": true
     },
     {
       "test_id": "TST-CFG-018",
       "path": "evidence/synthetic/CFG-018-synthetic.json",
-      "sha256": "6a4f3dee970cd87cb1604c5106fad0e6cad9ea1995cdf76ea589151cc577e3cd",
+      "sha256": "b68836fd4b0b263b0e911ff38fb5b0af557a65a901e2f72deb699602f4a25e6c",
       "classification": "SYNTHETIC",
       "not_customer_evidence": true
     },
     {
       "test_id": "TST-CFG-019",
       "path": "evidence/synthetic/CFG-019-synthetic.json",
-      "sha256": "e59f92aa3ad7583cc5f68e3ce8654b37daff8ba8d70248c5b077f15c5a52a114",
+      "sha256": "6b5a076eda498a1ba9e8435b6840fa689925170501feeec3f18b7af8678ecc3d",
       "classification": "SYNTHETIC",
       "not_customer_evidence": true
     },
     {
       "test_id": "TST-CFG-020",
       "path": "evidence/synthetic/CFG-020-synthetic.json",
-      "sha256": "f3b9ea069aa384ce3bcdfa04bef87135666fb164ab07fdd2fce6bd34056c21f2",
+      "sha256": "5fc2f751f832f51f9897c8824aee1ceb3e136372a5765282d3737c036aeeeb84",
       "classification": "SYNTHETIC",
       "not_customer_evidence": true
     },
     {
       "test_id": "TST-CFG-021",
       "path": "evidence/synthetic/CFG-021-synthetic.json",
-      "sha256": "5f201a84e9fa49670362b3302ff58361fc2f32d2c2432d31f172f4df040c5957",
+      "sha256": "989877dbab97c02d3079b81dbf03e20978ac648323eb2b5e015466431052b829",
       "classification": "SYNTHETIC",
       "not_customer_evidence": true
     },
     {
       "test_id": "TST-CFG-022",
       "path": "evidence/synthetic/CFG-022-synthetic.json",
-      "sha256": "a7c6e8ab055dd9621d47c95e8d4bd39ce3dc2434c5ace0dbc7f08cbc0e18153f",
+      "sha256": "96f3838356979d0b14a0e3ccb68a1ca9ae71cc592f06702bf0c6e61c29ef4f45",
       "classification": "SYNTHETIC",
       "not_customer_evidence": true
     }
-  ]
+  ],
+  "hash_method": "SHA-256 of file bytes with CRLF normalized to LF"
 }

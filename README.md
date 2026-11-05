@@ -2,7 +2,7 @@
 
 ## What this is
 
-This is a customer-ready reference implementation for governing a custom Microsoft AI agent. It is not a production service, and installing it does not make an organization compliant with NIST, ISO, SOC 2, HIPAA, GDPR, PCI DSS, SOX, or GLBA.
+This is a reference implementation for governing a custom Microsoft AI agent. Run it locally, review the control path, and adapt the patterns in an authorized test tenant. It is not a production service, and installing it does not make an organization compliant with NIST, ISO, SOC 2, HIPAA, GDPR, PCI DSS, SOX, or GLBA.
 
 Use it to see, test, and adapt one control path:
 
@@ -33,6 +33,17 @@ Start locally. Do not connect a tenant until the offline path makes sense.
 
 You need Python 3.10 or later. No packages are required for the offline demo. From the repository root:
 
+macOS or Linux:
+
+```bash
+export PYTHONPATH=src
+python -m unittest discover -s tests -v
+python examples/offline_demo.py
+python -m eagov.cli --mode offline --prompt "Summarize the public status page."
+```
+
+Windows PowerShell:
+
 ```powershell
 $env:PYTHONPATH = "src"
 python -m unittest discover -s tests -v
@@ -40,17 +51,18 @@ python examples/offline_demo.py
 python -m eagov.cli --mode offline --prompt "Summarize the public status page."
 ```
 
-On macOS or Linux, set `PYTHONPATH=src` the same way. The CLI needs that path.
+`examples/offline_demo.py` adds `src` to the path for you. The CLI does not, so set `PYTHONPATH` before `python -m eagov.cli`. An allowed run exits 0. A denied run exits 1 and prints `status=` on standard error.
 
 The demo prints two outcomes: an allowed request, and a request denied because it contains `SYNTHETIC_BLOCK_TOKEN`. Both results are synthetic. They are not customer evidence.
 
-Try a denied tool as well:
+Try a denied tool, then a response-policy denial:
 
-```powershell
+```bash
 python -m eagov.cli --mode offline --tool shell_exec
+python -m eagov.cli --mode offline --prompt "SYNTHETIC_RESPONSE_BLOCK"
 ```
 
-`shell_exec` is not on the allowlist, so the gateway rejects it.
+`shell_exec` is not on the allowlist, so the gateway rejects it before the tool runs.
 
 ### 2. Read the control path before changing it
 

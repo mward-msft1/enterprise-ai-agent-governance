@@ -1,5 +1,13 @@
 # Troubleshooting
 
+## No module named eagov
+
+Set `PYTHONPATH` to the `src` directory before `python -m eagov.cli`. On macOS or Linux use `export PYTHONPATH=src`. In Windows PowerShell use `$env:PYTHONPATH = "src"`. The example scripts add that path themselves.
+
+## Denied run still looks successful
+
+Check the process exit code, not only the JSON. `status=allowed` exits 0. `denied_prompt`, `denied_response`, and `denied_tool` exit 1. The status line is written to standard error.
+
 ## Tenant mode exits before any call
 
 `examples/tenant_demo.py` exits when placeholders remain. Replace them in a secret store. Do not remove the check.

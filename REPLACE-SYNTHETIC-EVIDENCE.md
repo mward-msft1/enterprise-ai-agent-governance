@@ -20,10 +20,10 @@ Record who ran the test, the tenant ID suffix, the UTC time, and the command or 
 
 ## 5. Calculate SHA-256 hashes
 
-Hash the redacted evidence file after redaction, not before.
+Hash the redacted evidence file after redaction, not before. Published hashes in this repository are SHA-256 of the file with Windows CRLF converted to LF, so the same file matches on macOS, Linux, and Windows.
 
 ```bash
-python -c "import hashlib,pathlib,sys; print(hashlib.sha256(pathlib.Path(sys.argv[1]).read_bytes()).hexdigest())" evidence/tenant/TST-CFG-001.json
+python -c "import hashlib,pathlib,sys; print(hashlib.sha256(pathlib.Path(sys.argv[1]).read_bytes().replace(b'\r\n', b'\n')).hexdigest())" evidence/tenant/TST-CFG-001.json
 ```
 
 ## 6. Store evidence securely

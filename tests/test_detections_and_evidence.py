@@ -46,8 +46,8 @@ class DetectionEvidenceTests(unittest.TestCase):
             payload = json.loads(path.read_text(encoding="utf-8"))
             self.assertEqual(payload["classification"], "SYNTHETIC")
             self.assertTrue(payload["not_customer_evidence"])
-            digest = hashlib.sha256(path.read_bytes()).hexdigest()
-            self.assertEqual(digest, item["sha256"])
+            digest = hashlib.sha256(path.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
+            self.assertEqual(digest, item["sha256"], path)
 
     def test_every_checklist_item_has_a_test_result(self):
         with (ROOT / "checklists" / "tenant-configuration-checklist.csv").open(encoding="utf-8") as handle:

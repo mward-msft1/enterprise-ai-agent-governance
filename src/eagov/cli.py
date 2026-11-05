@@ -39,8 +39,12 @@ def main(argv: list[str] | None = None) -> int:
         user_id=args.user_id,
         tool_name=args.tool,
     )
+    print(
+        f"status={result.status} synthetic={str(result.synthetic).lower()} production_ready=false",
+        file=sys.stderr,
+    )
     print(json.dumps(result.as_dict(), indent=2))
-    return 0
+    return 0 if result.status == "allowed" else 1
 
 
 if __name__ == "__main__":

@@ -202,6 +202,14 @@ class GovernanceWorkflow:
         else:
             response_decision = None
 
+        status = "allowed"
+        if not prompt_decision.allowed:
+            status = "denied_prompt"
+        elif response_decision and not response_decision.allowed:
+            status = "denied_response"
+        elif tool_result and not tool_result["allowed"]:
+            status = "denied_tool"
+
         audit_decision = response_decision or prompt_decision
         audit = record_content_activity(
             self.client,
@@ -214,18 +222,11 @@ class GovernanceWorkflow:
             audit_decision,
         )
         stages.append("audit")
+        audit["workflow_status"] = status
         telemetry = self.telemetry.export(correlation_id)
         stages.append("otel_export")
         investigation = build_investigation_bundle(correlation_id)
         stages.append("defender_sentinel")
-
-        status = "allowed"
-        if not prompt_decision.allowed:
-            status = "denied_prompt"
-        elif response_decision and not response_decision.allowed:
-            status = "denied_response"
-        elif tool_result and not tool_result["allowed"]:
-            status = "denied_tool"
 
         return WorkflowResult(
             correlation_id=correlation_id,
