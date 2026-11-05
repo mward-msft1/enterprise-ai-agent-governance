@@ -1,7 +1,7 @@
 [project]
 name = "enterprise-ai-agent-governance"
-version = "0.1.1"
-description = "Cross-industry Microsoft AI agent governance, security, compliance, auditing, and observability reference implementation"
+version = "0.1.2"
+description = "Reference kit for producing custom-agent audit evidence from Microsoft 365 E7"
 readme = "README.md"
 requires-python = ">=3.10"
 license = "MIT"

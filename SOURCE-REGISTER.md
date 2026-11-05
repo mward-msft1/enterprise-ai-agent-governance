@@ -4,6 +4,7 @@ Reviewed 2026-11-05 against Microsoft Learn. Re-verify before production. Page c
 
 | Topic | Source | What this repository relies on |
 | --- | --- | --- |
+| Microsoft 365 E7 bundle | https://www.microsoft.com/en-us/microsoft-365/enterprise/e7 | E7 includes Microsoft 365 E5, Microsoft 365 Copilot, Microsoft Agent 365, and Microsoft Entra Suite. Confirm the customer agreement before describing a feature as licensed. |
 | Protection scope compute | https://learn.microsoft.com/en-us/graph/api/userprotectionscopecontainer-compute | `POST /users/{userId}/dataSecurityAndGovernance/protectionScopes/compute`; `ProtectionScopes.Compute.User` and `.All`; delegated and application; `/me` is delegated only |
 | processContent | https://learn.microsoft.com/en-us/graph/api/userdatasecurityandgovernance-processcontent | `Content.Process.User` and `.All`; response fields `protectionScopeState`, `policyActions`, `processingErrors`; AI agent `aiAgentInfo` |
 | contentActivities | https://learn.microsoft.com/en-us/graph/api/activitiescontainer-post-contentactivities | `ContentActivity.Write` for delegated and application; `201 Created` |

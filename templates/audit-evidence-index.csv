@@ -1,0 +1,9 @@
+Audience,Auditor question,E7 product,Source record,Correlation ID,Export UTC,Export location,SHA-256,Tester,Reviewer,Review date,Status,Notes
+Internal audit,Which agent acted?,Entra and Agent 365,Agent inventory or application audit export,,,Not evidenced,Replace this row. Do not point it at evidence/synthetic.,
+Internal audit,Which person did the agent act for?,Entra ID,Sign-in log for the delegated user,,,Not evidenced,,
+Internal audit,Was the content in a Purview scope?,Microsoft Purview,protectionScopes/compute response and ETag,,,Not evidenced,,
+Internal audit,Did policy allow the prompt?,Microsoft Purview,processContent policyActions and processingErrors,,,Not evidenced,,
+Internal audit,Did policy allow the response?,Microsoft Purview,processContent policyActions and processingErrors,,,Not evidenced,,
+Security operations,Which tools ran and were they allowed?,Agent application and Agent 365,Allowlist decision and telemetry span,,,Not evidenced,A denied tool must show that the tool did not execute.,
+Security operations,Can we find the same event later?,Defender XDR or Sentinel,Hunting or analytics result for the correlation ID,,,Not evidenced,AgentGovernance_CL is a custom table. It is not created by buying E7.,
+External auditor,Is the export complete and reviewed?,Customer evidence store,Redacted export plus this index row,,,Not evidenced,Second person reviews. Tester cannot be the only reviewer.,

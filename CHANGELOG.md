@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.2 — 2026-11-05
+
+- Added a customer audit guide and a blank evidence index for internal and external reviewers.
+- README now leads with the Microsoft 365 E7 evidence story instead of the toolkit inventory.
+
 ## 0.1.1 — 2026-11-05
 
 - Evidence hashes now use LF line endings, so the same SHA-256 matches on Windows, macOS, and Linux.

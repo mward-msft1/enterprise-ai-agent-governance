@@ -2,9 +2,13 @@
 
 ## What this is
 
-This is a reference implementation for governing a custom Microsoft AI agent. Run it locally, review the control path, and adapt the patterns in an authorized test tenant. It is not a production service, and installing it does not make an organization compliant with NIST, ISO, SOC 2, HIPAA, GDPR, PCI DSS, SOX, or GLBA.
+This repository helps a Microsoft 365 E7 customer produce audit evidence for a custom AI agent. E7 includes Microsoft 365 E5, Microsoft 365 Copilot, Microsoft Agent 365, and Microsoft Entra Suite. Those products can show who the agent was, which person it acted for, whether Purview allowed the content, and whether Defender can find the same event later.
 
-Use it to see, test, and adapt one control path:
+The customer uses that evidence with internal security, internal audit, and external reviewers. This repository shows the control path and names the record each step should leave. It does not certify compliance with NIST, ISO, SOC 2, HIPAA, GDPR, PCI DSS, SOX, or GLBA.
+
+Start with [CUSTOMER-AUDIT-GUIDE.md](CUSTOMER-AUDIT-GUIDE.md). That is the page to use in a customer meeting. The blank workpaper is [templates/audit-evidence-index.csv](templates/audit-evidence-index.csv).
+
+Use the sample to see, test, and adapt one control path:
 
 1. Identify the agent and the user.
 2. Check Microsoft Purview before the model runs.
@@ -23,13 +27,22 @@ It has two modes:
 | Offline synthetic | A full local run with fake users, fake policy decisions, and fake evidence | Proof that your tenant is configured |
 | Authorized test tenant | Request builders for Graph, Purview, Entra, Agent 365, and OpenTelemetry | Production-ready until you replace placeholders and complete tenant tests |
 
-This repository is original work. It uses [judeper/FSI-AgentGov-Solutions](https://github.com/judeper/FSI-AgentGov-Solutions) as architectural inspiration only. It is not a fork, and it does not copy that repository's code.
-
 ## How to use it
 
-Start locally. Do not connect a tenant until the offline path makes sense.
+Explain the evidence first. Run the sample second. Connect a tenant only after the offline path makes sense.
 
-### 1. Run the sample on your machine
+### 1. Explain it to the customer
+
+Open [CUSTOMER-AUDIT-GUIDE.md](CUSTOMER-AUDIT-GUIDE.md) and walk the six questions: which agent, which person, was the content in scope, did policy allow the prompt and the response, which tools ran, and can the same correlation ID be found later.
+
+Separate two facts:
+
+- E7 contains the products that can record the event.
+- A custom agent does not appear in those products until it is registered and it emits the Purview, identity, and telemetry events.
+
+Files in `evidence/synthetic` are examples of the package shape. They are not the customer's audit evidence.
+
+### 2. Run the sample on your machine
 
 You need Python 3.10 or later. No packages are required for the offline demo. From the repository root:
 
@@ -64,10 +77,11 @@ python -m eagov.cli --mode offline --prompt "SYNTHETIC_RESPONSE_BLOCK"
 
 `shell_exec` is not on the allowlist, so the gateway rejects it before the tool runs.
 
-### 2. Read the control path before changing it
+### 3. Read the control path before changing it
 
 | If you want to... | Start here |
 | --- | --- |
+| Explain the audit package | [CUSTOMER-AUDIT-GUIDE.md](CUSTOMER-AUDIT-GUIDE.md) |
 | Understand the design | [ARCHITECTURE.md](ARCHITECTURE.md) |
 | See the enforced order of checks | `src/eagov/workflow.py` |
 | See which Graph permissions are delegated vs application | [config/permissions-matrix.md](config/permissions-matrix.md) |
@@ -75,7 +89,7 @@ python -m eagov.cli --mode offline --prompt "SYNTHETIC_RESPONSE_BLOCK"
 | Plan a tenant rollout | [IMPLEMENTATION-ROADMAP.md](IMPLEMENTATION-ROADMAP.md) and [CUSTOMER-QUICKSTART.md](CUSTOMER-QUICKSTART.md) |
 | Decide whether it can go to production | [PRODUCTION-GATES.md](PRODUCTION-GATES.md) |
 
-### 3. Prepare an authorized test tenant
+### 4. Prepare an authorized test tenant
 
 Copy [config/customer.template.json](config/customer.template.json) to a file that is not committed, or store the values in a secret store. Replace every `REPLACE_WITH_*` value, including tenant ID, client ID, application ID, agent identity, Azure subscription, resource group, Azure OpenAI endpoint, model deployment, Application Insights connection string, and Sentinel workspace.
 
@@ -89,7 +103,7 @@ That command must exit without calling Graph. Only after the placeholders are go
 
 Optional tenant packages are listed in `requirements-tenant.txt`. They were not installed or integration-tested when this repository was created. Do not treat an import as a production sign-off.
 
-### 4. Replace the synthetic evidence
+### 5. Replace the synthetic evidence
 
 `evidence/synthetic` and `TENANT-TEST-RESULTS.md` are packaging examples. Follow [REPLACE-SYNTHETIC-EVIDENCE.md](REPLACE-SYNTHETIC-EVIDENCE.md) before anyone describes a control as tested in a tenant.
 
@@ -121,6 +135,8 @@ Agent identity
 
 | Path | Purpose |
 | --- | --- |
+| `CUSTOMER-AUDIT-GUIDE.md` | Meeting script and E7 evidence map |
+| `templates/audit-evidence-index.csv` | Blank workpaper for internal and external reviewers |
 | `src/eagov` | Executable reference workflow |
 | `config` | Customer template and permissions matrix |
 | `detections` | Prioritized KQL and Sentinel ARM rules |
@@ -130,8 +146,13 @@ Agent identity
 | `examples` | Offline demo, tenant gate, and MCP server |
 | `.github/workflows` | Unit tests and security scanning |
 
+## About this repository
+
+This repository is original work. It uses [judeper/FSI-AgentGov-Solutions](https://github.com/judeper/FSI-AgentGov-Solutions) as architectural inspiration only. It is not a fork, and it does not copy that repository's code.
+
 ## Documentation
 
+- [CUSTOMER-AUDIT-GUIDE.md](CUSTOMER-AUDIT-GUIDE.md)
 - [ARCHITECTURE.md](ARCHITECTURE.md)
 - [IMPLEMENTATION-ROADMAP.md](IMPLEMENTATION-ROADMAP.md)
 - [CONTROL-CATALOG.md](CONTROL-CATALOG.md)
