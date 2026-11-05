@@ -1,0 +1,231 @@
+{
+  "reviewed": "2026-11-05",
+  "disclaimer": "Queries use columns documented by Microsoft or the custom table in this repository. Confirm each table with getschema or advanced-hunting schema before enabling an analytics rule. These detections do not establish regulatory compliance.",
+  "detections": [
+    {
+      "id": "EAG-DET-001",
+      "priority": "P1",
+      "title": "Agent permission changes",
+      "surface": "sentinel",
+      "query_file": "detections/kql/EAG-DET-001-agent-permission-changes.kql",
+      "required_tables": [
+        "AuditLogs"
+      ],
+      "required_columns": [
+        "TimeGenerated",
+        "OperationName",
+        "Category",
+        "Result",
+        "Identity",
+        "InitiatedBy",
+        "TargetResources",
+        "CorrelationId"
+      ],
+      "required_permissions": [
+        "Microsoft Sentinel Reader or Log Analytics Reader on the workspace"
+      ],
+      "schema_source": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/auditlogs",
+      "analytics_rule": true
+    },
+    {
+      "id": "EAG-DET-002",
+      "priority": "P1",
+      "title": "Suspicious authentication",
+      "surface": "sentinel",
+      "query_file": "detections/kql/EAG-DET-002-suspicious-authentication.kql",
+      "required_tables": [
+        "SigninLogs"
+      ],
+      "required_columns": [
+        "TimeGenerated",
+        "UserPrincipalName",
+        "AppId",
+        "AppDisplayName",
+        "IPAddress",
+        "ResultType",
+        "RiskLevelDuringSignIn",
+        "ConditionalAccessStatus",
+        "Location",
+        "CorrelationId"
+      ],
+      "required_permissions": [
+        "Microsoft Sentinel Reader or Log Analytics Reader"
+      ],
+      "schema_source": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/signinlogs",
+      "analytics_rule": true
+    },
+    {
+      "id": "EAG-DET-003",
+      "priority": "P1",
+      "title": "Application credential changes",
+      "surface": "sentinel",
+      "query_file": "detections/kql/EAG-DET-003-application-credential-changes.kql",
+      "required_tables": [
+        "AuditLogs"
+      ],
+      "required_columns": [
+        "TimeGenerated",
+        "OperationName",
+        "Result",
+        "Identity",
+        "InitiatedBy",
+        "TargetResources",
+        "CorrelationId"
+      ],
+      "required_permissions": [
+        "Microsoft Sentinel Reader or Log Analytics Reader"
+      ],
+      "schema_source": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/auditlogs",
+      "analytics_rule": true
+    },
+    {
+      "id": "EAG-DET-004",
+      "priority": "P2",
+      "title": "Agent policy denials",
+      "surface": "sentinel-custom",
+      "query_file": "detections/kql/EAG-DET-004-agent-policy-denials.kql",
+      "required_tables": [
+        "AgentGovernance_CL"
+      ],
+      "required_columns": [
+        "TimeGenerated",
+        "CorrelationId",
+        "AgentId",
+        "Stage",
+        "Decision",
+        "UserId",
+        "Allowed"
+      ],
+      "required_permissions": [
+        "Log Analytics Reader on the workspace that hosts the custom table"
+      ],
+      "schema_source": "deploy/agent-governance-table.json",
+      "analytics_rule": true
+    },
+    {
+      "id": "EAG-DET-005",
+      "priority": "P2",
+      "title": "Unusual tool execution",
+      "surface": "sentinel-custom",
+      "query_file": "detections/kql/EAG-DET-005-unusual-tool-execution.kql",
+      "required_tables": [
+        "AgentGovernance_CL"
+      ],
+      "required_columns": [
+        "TimeGenerated",
+        "AgentId",
+        "ToolName",
+        "UserId",
+        "Stage"
+      ],
+      "required_permissions": [
+        "Log Analytics Reader"
+      ],
+      "schema_source": "deploy/agent-governance-table.json",
+      "analytics_rule": true
+    },
+    {
+      "id": "EAG-DET-006",
+      "priority": "P2",
+      "title": "Purview evaluation failures",
+      "surface": "sentinel",
+      "query_file": "detections/kql/EAG-DET-006-purview-evaluation-failures.kql",
+      "required_tables": [
+        "MicrosoftGraphActivityLogs"
+      ],
+      "required_columns": [
+        "TimeGenerated",
+        "RequestUri",
+        "RequestMethod",
+        "ResponseStatusCode",
+        "AppId",
+        "UserId"
+      ],
+      "required_permissions": [
+        "Log Analytics Reader; Microsoft Graph activity logs connector enabled"
+      ],
+      "schema_source": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/microsoftgraphactivitylogs",
+      "analytics_rule": true
+    },
+    {
+      "id": "EAG-DET-007",
+      "priority": "P2",
+      "title": "Suspicious cloud application activity",
+      "surface": "defender-hunting",
+      "query_file": "detections/kql/EAG-DET-007-suspicious-cloud-app-activity.kql",
+      "required_tables": [
+        "CloudAppEvents"
+      ],
+      "required_columns": [
+        "Timestamp",
+        "ActionType",
+        "Application",
+        "OAuthAppId",
+        "AccountObjectId",
+        "AccountDisplayName",
+        "IsAdminOperation",
+        "IPAddress",
+        "CountryCode",
+        "ReportId"
+      ],
+      "required_permissions": [
+        "Defender XDR advanced hunting; Defender for Cloud Apps connected"
+      ],
+      "schema_source": "https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-cloudappevents-table",
+      "analytics_rule": false
+    },
+    {
+      "id": "EAG-DET-008",
+      "priority": "P1",
+      "title": "Anonymous proxy activity",
+      "surface": "defender-hunting",
+      "query_file": "detections/kql/EAG-DET-008-anonymous-proxy.kql",
+      "required_tables": [
+        "CloudAppEvents"
+      ],
+      "required_columns": [
+        "Timestamp",
+        "ActionType",
+        "Application",
+        "OAuthAppId",
+        "AccountObjectId",
+        "IPAddress",
+        "IsAnonymousProxy",
+        "CountryCode",
+        "City",
+        "Isp",
+        "ReportId"
+      ],
+      "required_permissions": [
+        "Defender XDR advanced hunting"
+      ],
+      "schema_source": "https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-cloudappevents-table",
+      "analytics_rule": false
+    },
+    {
+      "id": "EAG-DET-009",
+      "priority": "P1",
+      "title": "High-severity Defender alerts",
+      "surface": "defender-hunting",
+      "query_file": "detections/kql/EAG-DET-009-high-severity-alerts.kql",
+      "required_tables": [
+        "AlertInfo"
+      ],
+      "required_columns": [
+        "Timestamp",
+        "AlertId",
+        "Title",
+        "Category",
+        "Severity",
+        "ServiceSource",
+        "DetectionSource",
+        "AttackTechniques"
+      ],
+      "required_permissions": [
+        "Defender XDR advanced hunting; service data access depends on deployed Defender products and RBAC"
+      ],
+      "schema_source": "https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-alertinfo-table",
+      "analytics_rule": false
+    }
+  ]
+}

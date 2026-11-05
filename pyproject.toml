@@ -1,0 +1,14 @@
+[project]
+name = "enterprise-ai-agent-governance"
+version = "0.1.0"
+description = "Cross-industry Microsoft AI agent governance, security, compliance, auditing, and observability reference implementation"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+authors = [{name = "enterprise-ai-agent-governance contributors"}]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.unittest]
+start-directory = "tests"

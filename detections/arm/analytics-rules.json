@@ -1,0 +1,175 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "workspaceName": {
+      "type": "string",
+      "defaultValue": "REPLACE_WITH_SENTINEL_WORKSPACE_NAME"
+    },
+    "deployRules": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "Keep false until tenant schema validation passes. Deployment creates no rule while false."
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
+      "apiVersion": "2023-11-01",
+      "name": "[concat(parameters('workspaceName'), '/Microsoft.SecurityInsights/', 'eag-det-001')]",
+      "condition": "[parameters('deployRules')]",
+      "kind": "Scheduled",
+      "properties": {
+        "displayName": "EAG-DET-001 Agent permission changes",
+        "description": "Rows only when an Entra application-management audit records a permission, role-assignment, or consent change in the lookback window.",
+        "severity": "High",
+        "enabled": false,
+        "query": "AuditLogs\n| where TimeGenerated > ago(1d)\n| where Category == \"ApplicationManagement\"\n| where OperationName has \"permission\" or OperationName has \"role assignment\" or OperationName has \"Consent to application\"\n| project TimeGenerated, OperationName, Category, Result, Identity, InitiatedBy, TargetResources, CorrelationId",
+        "queryFrequency": "PT1H",
+        "queryPeriod": "P1D",
+        "triggerOperator": "GreaterThan",
+        "triggerThreshold": 0,
+        "suppressionDuration": "PT1H",
+        "suppressionEnabled": false,
+        "tactics": [
+          "Persistence"
+        ],
+        "techniques": [
+          "T1098"
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
+      "apiVersion": "2023-11-01",
+      "name": "[concat(parameters('workspaceName'), '/Microsoft.SecurityInsights/', 'eag-det-002')]",
+      "condition": "[parameters('deployRules')]",
+      "kind": "Scheduled",
+      "properties": {
+        "displayName": "EAG-DET-002 Suspicious authentication",
+        "description": "Failed, high-risk, or Conditional Access failure sign-ins to the agent application.",
+        "severity": "High",
+        "enabled": false,
+        "query": "SigninLogs\n| where TimeGenerated > ago(1d)\n| where AppId == \"REPLACE_WITH_APPLICATION_ID\"\n| where ResultType != 0 or RiskLevelDuringSignIn has \"high\" or ConditionalAccessStatus == \"failure\"\n| project TimeGenerated, UserPrincipalName, AppId, AppDisplayName, IPAddress, ResultType, RiskLevelDuringSignIn, ConditionalAccessStatus, Location, CorrelationId",
+        "queryFrequency": "PT1H",
+        "queryPeriod": "P1D",
+        "triggerOperator": "GreaterThan",
+        "triggerThreshold": 0,
+        "suppressionDuration": "PT1H",
+        "suppressionEnabled": false,
+        "tactics": [
+          "CredentialAccess"
+        ],
+        "techniques": [
+          "T1078"
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
+      "apiVersion": "2023-11-01",
+      "name": "[concat(parameters('workspaceName'), '/Microsoft.SecurityInsights/', 'eag-det-003')]",
+      "condition": "[parameters('deployRules')]",
+      "kind": "Scheduled",
+      "properties": {
+        "displayName": "EAG-DET-003 Application credential changes",
+        "description": "Audit events that add, update, or remove application or service-principal credentials.",
+        "severity": "High",
+        "enabled": false,
+        "query": "AuditLogs\n| where TimeGenerated > ago(1d)\n| where OperationName has \"credential\" or OperationName has \"Certificates and secrets\"\n| project TimeGenerated, OperationName, Result, Identity, InitiatedBy, TargetResources, CorrelationId",
+        "queryFrequency": "PT1H",
+        "queryPeriod": "P1D",
+        "triggerOperator": "GreaterThan",
+        "triggerThreshold": 0,
+        "suppressionDuration": "PT1H",
+        "suppressionEnabled": false,
+        "tactics": [
+          "Persistence"
+        ],
+        "techniques": [
+          "T1098"
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
+      "apiVersion": "2023-11-01",
+      "name": "[concat(parameters('workspaceName'), '/Microsoft.SecurityInsights/', 'eag-det-004')]",
+      "condition": "[parameters('deployRules')]",
+      "kind": "Scheduled",
+      "properties": {
+        "displayName": "EAG-DET-004 Agent policy denials",
+        "description": "Custom-table rows emitted by this reference app when Purview or the synthetic policy engine denies a prompt or response.",
+        "severity": "Medium",
+        "enabled": false,
+        "query": "AgentGovernance_CL\n| where TimeGenerated > ago(1d)\n| where Allowed == false and Stage in (\"prompt\", \"response\")\n| project TimeGenerated, CorrelationId, AgentId, Stage, Decision, UserId, Allowed",
+        "queryFrequency": "PT1H",
+        "queryPeriod": "P1D",
+        "triggerOperator": "GreaterThan",
+        "triggerThreshold": 0,
+        "suppressionDuration": "PT1H",
+        "suppressionEnabled": false,
+        "tactics": [
+          "DefenseEvasion"
+        ],
+        "techniques": [
+          "T1562"
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
+      "apiVersion": "2023-11-01",
+      "name": "[concat(parameters('workspaceName'), '/Microsoft.SecurityInsights/', 'eag-det-005')]",
+      "condition": "[parameters('deployRules')]",
+      "kind": "Scheduled",
+      "properties": {
+        "displayName": "EAG-DET-005 Unusual tool execution",
+        "description": "Tool names outside the customer allowlist.",
+        "severity": "Medium",
+        "enabled": false,
+        "query": "AgentGovernance_CL\n| where TimeGenerated > ago(1d)\n| where Stage == \"tool\"\n| where ToolName !in (\"knowledge_lookup\", \"policy_status\")\n| summarize ToolCalls = count() by AgentId, ToolName, UserId, bin(TimeGenerated, 1h)\n| where ToolCalls > 0",
+        "queryFrequency": "PT1H",
+        "queryPeriod": "P1D",
+        "triggerOperator": "GreaterThan",
+        "triggerThreshold": 0,
+        "suppressionDuration": "PT1H",
+        "suppressionEnabled": false,
+        "tactics": [
+          "Execution"
+        ],
+        "techniques": [
+          "T1059"
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.OperationalInsights/workspaces/providers/alertRules",
+      "apiVersion": "2023-11-01",
+      "name": "[concat(parameters('workspaceName'), '/Microsoft.SecurityInsights/', 'eag-det-006')]",
+      "condition": "[parameters('deployRules')]",
+      "kind": "Scheduled",
+      "properties": {
+        "displayName": "EAG-DET-006 Purview evaluation failures",
+        "description": "Non-success Graph calls to dataSecurityAndGovernance endpoints.",
+        "severity": "Medium",
+        "enabled": false,
+        "query": "MicrosoftGraphActivityLogs\n| where TimeGenerated > ago(1d)\n| where RequestUri has \"dataSecurityAndGovernance\"\n| where ResponseStatusCode !in (200, 201, 202, 204)\n| project TimeGenerated, RequestUri, RequestMethod, ResponseStatusCode, AppId, UserId",
+        "queryFrequency": "PT1H",
+        "queryPeriod": "P1D",
+        "triggerOperator": "GreaterThan",
+        "triggerThreshold": 0,
+        "suppressionDuration": "PT1H",
+        "suppressionEnabled": false,
+        "tactics": [
+          "DefenseEvasion"
+        ],
+        "techniques": [
+          "T1562"
+        ]
+      }
+    }
+  ]
+}

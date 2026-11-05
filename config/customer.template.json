@@ -1,0 +1,44 @@
+{
+  "mode": "offline",
+  "classification": "TEMPLATE",
+  "tenant": {
+    "tenant_id": "REPLACE_WITH_TENANT_ID"
+  },
+  "application": {
+    "name": "enterprise-ai-agent-governance",
+    "version": "0.1.0",
+    "client_id": "REPLACE_WITH_CLIENT_ID",
+    "application_id": "REPLACE_WITH_APPLICATION_ID",
+    "redirect_uri": "REPLACE_WITH_REDIRECT_URI"
+  },
+  "agent_identity": {
+    "agent_id": "REPLACE_WITH_AGENT_ID",
+    "blueprint_id": "REPLACE_WITH_AGENT_BLUEPRINT_ID",
+    "application_id": "REPLACE_WITH_APPLICATION_ID",
+    "display_name": "REPLACE_WITH_AGENT_DISPLAY_NAME"
+  },
+  "azure": {
+    "subscription_id": "REPLACE_WITH_AZURE_SUBSCRIPTION_ID",
+    "resource_group": "REPLACE_WITH_RESOURCE_GROUP"
+  },
+  "azure_openai": {
+    "endpoint": "REPLACE_WITH_AZURE_OPENAI_ENDPOINT",
+    "deployment": "REPLACE_WITH_MODEL_DEPLOYMENT",
+    "api_key": "REPLACE_WITH_AZURE_OPENAI_API_KEY"
+  },
+  "application_insights": {
+    "connection_string": "REPLACE_WITH_APPINSIGHTS_CONNECTION_STRING"
+  },
+  "sentinel": {
+    "workspace_name": "REPLACE_WITH_SENTINEL_WORKSPACE_NAME",
+    "workspace_id": "REPLACE_WITH_SENTINEL_WORKSPACE_ID",
+    "resource_group": "REPLACE_WITH_RESOURCE_GROUP"
+  },
+  "granted_permissions": {
+    "delegated": [],
+    "application": []
+  },
+  "tools": {
+    "allowlist": ["knowledge_lookup", "policy_status"]
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "deployResources": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "Keep false until a reviewer accepts the billable resources. No resource is created while false."
+      }
+    },
+    "workspaceName": {
+      "type": "string",
+      "defaultValue": "REPLACE_WITH_SENTINEL_WORKSPACE_NAME"
+    },
+    "appInsightsName": {
+      "type": "string",
+      "defaultValue": "REPLACE_WITH_APPINSIGHTS_NAME"
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]"
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.OperationalInsights/workspaces",
+      "apiVersion": "2022-10-01",
+      "name": "[parameters('workspaceName')]",
+      "condition": "[parameters('deployResources')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "sku": {
+          "name": "PerGB2018"
+        },
+        "retentionInDays": 30
+      }
+    },
+    {
+      "type": "Microsoft.OperationsManagement/solutions",
+      "apiVersion": "2015-11-01-preview",
+      "name": "[concat('SecurityInsights(', parameters('workspaceName'), ')')]",
+      "condition": "[parameters('deployResources')]",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspaceName'))]"
+      ],
+      "properties": {
+        "workspaceResourceId": "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspaceName'))]"
+      },
+      "plan": {
+        "name": "[concat('SecurityInsights(', parameters('workspaceName'), ')')]",
+        "publisher": "Microsoft",
+        "product": "OMSGallery/SecurityInsights",
+        "promotionCode": ""
+      }
+    },
+    {
+      "type": "Microsoft.Insights/components",
+      "apiVersion": "2020-02-02",
+      "name": "[parameters('appInsightsName')]",
+      "condition": "[parameters('deployResources')]",
+      "location": "[parameters('location')]",
+      "kind": "web",
+      "dependsOn": [
+        "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspaceName'))]"
+      ],
+      "properties": {
+        "Application_Type": "web",
+        "WorkspaceResourceId": "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspaceName'))]"
+      }
+    }
+  ]
+}

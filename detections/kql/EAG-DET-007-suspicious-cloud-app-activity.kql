@@ -1,0 +1,10 @@
+// Detection ID: EAG-DET-007
+// Priority: P2
+// Surface: defender-hunting
+// Schema source: https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-cloudappevents-table
+// Confirm this query in the customer workspace before enabling it.
+CloudAppEvents
+| where Timestamp > ago(1d)
+| where OAuthAppId == "REPLACE_WITH_APPLICATION_ID" or Application has "Copilot"
+| where IsAdminOperation == true or ActionType has "Consent"
+| project Timestamp, ActionType, Application, OAuthAppId, AccountObjectId, AccountDisplayName, IsAdminOperation, IPAddress, CountryCode, ReportId

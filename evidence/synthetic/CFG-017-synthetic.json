@@ -1,0 +1,11 @@
+{
+  "classification": "SYNTHETIC",
+  "not_customer_evidence": true,
+  "production_ready": false,
+  "test_id": "TST-CFG-017",
+  "checklist_item": "CFG-017",
+  "requirement": "Deploy the APIM policy in a non-production gateway",
+  "synthetic_observation": "Local authoring environment did not connect to a Microsoft tenant. This record exists so the evidence slot and hash procedure can be tested.",
+  "expected_evidence": "APIM trace with tokens removed.",
+  "actual_result": "SYNTHETIC_NOT_A_TENANT_RESULT"
+}

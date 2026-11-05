@@ -1,0 +1,6 @@
+# Optional tenant-mode packages. Do not install in production until the
+# versions are approved by the customer and the integrations are validated.
+# These packages were not installed while this repository was created.
+agent-framework
+agent-framework-openai
+microsoft-opentelemetry

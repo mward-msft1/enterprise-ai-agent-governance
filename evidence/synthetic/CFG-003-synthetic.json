@@ -1,0 +1,11 @@
+{
+  "classification": "SYNTHETIC",
+  "not_customer_evidence": true,
+  "production_ready": false,
+  "test_id": "TST-CFG-003",
+  "checklist_item": "CFG-003",
+  "requirement": "Create a distinct agent identity",
+  "synthetic_observation": "Local authoring environment did not connect to a Microsoft tenant. This record exists so the evidence slot and hash procedure can be tested.",
+  "expected_evidence": "Agent registry excerpt with IDs partially redacted.",
+  "actual_result": "SYNTHETIC_NOT_A_TENANT_RESULT"
+}

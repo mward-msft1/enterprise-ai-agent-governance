@@ -1,0 +1,11 @@
+{
+  "classification": "SYNTHETIC",
+  "not_customer_evidence": true,
+  "production_ready": false,
+  "test_id": "TST-CFG-009",
+  "checklist_item": "CFG-009",
+  "requirement": "Evaluate a prompt with processContent",
+  "synthetic_observation": "Local authoring environment did not connect to a Microsoft tenant. This record exists so the evidence slot and hash procedure can be tested.",
+  "expected_evidence": "Redacted processContent response.",
+  "actual_result": "SYNTHETIC_NOT_A_TENANT_RESULT"
+}

@@ -1,0 +1,4 @@
+# Runtime dependencies for offline synthetic mode: none.
+# Python 3.10 or later from the standard library is sufficient.
+# Tenant packages are listed in requirements-tenant.txt and were not
+# installed or integration-tested in the authoring environment.

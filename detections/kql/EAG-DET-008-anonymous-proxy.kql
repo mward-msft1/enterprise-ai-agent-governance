@@ -1,0 +1,10 @@
+// Detection ID: EAG-DET-008
+// Priority: P1
+// Surface: defender-hunting
+// Schema source: https://learn.microsoft.com/en-us/defender-xdr/advanced-hunting-cloudappevents-table
+// Confirm this query in the customer workspace before enabling it.
+CloudAppEvents
+| where Timestamp > ago(1d)
+| where IsAnonymousProxy == true
+| where OAuthAppId == "REPLACE_WITH_APPLICATION_ID" or Application has "REPLACE_WITH_AGENT_DISPLAY_NAME"
+| project Timestamp, ActionType, Application, OAuthAppId, AccountObjectId, IPAddress, IsAnonymousProxy, CountryCode, City, Isp, ReportId

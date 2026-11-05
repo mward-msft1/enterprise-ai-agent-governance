@@ -1,0 +1,9 @@
+// Detection ID: EAG-DET-004
+// Priority: P2
+// Surface: sentinel-custom
+// Schema source: deploy/agent-governance-table.json
+// Confirm this query in the customer workspace before enabling it.
+AgentGovernance_CL
+| where TimeGenerated > ago(1d)
+| where Allowed == false and Stage in ("prompt", "response")
+| project TimeGenerated, CorrelationId, AgentId, Stage, Decision, UserId, Allowed

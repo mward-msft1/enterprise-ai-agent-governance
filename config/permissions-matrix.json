@@ -1,0 +1,73 @@
+{
+  "reviewed": "2026-11-05",
+  "disclaimer": "Permission support below is transcribed from Microsoft Learn pages reviewed on the review date. Re-check the permissions reference before production consent. Granting these permissions does not by itself establish regulatory compliance.",
+  "sources": [
+    "https://learn.microsoft.com/en-us/graph/api/userprotectionscopecontainer-compute",
+    "https://learn.microsoft.com/en-us/graph/api/userdatasecurityandgovernance-processcontent",
+    "https://learn.microsoft.com/en-us/graph/api/activitiescontainer-post-contentactivities",
+    "https://learn.microsoft.com/en-us/graph/api/copilotadmin-list-packages",
+    "https://learn.microsoft.com/en-us/microsoft-agent-365/developer/microsoft-opentelemetry"
+  ],
+  "notes": [
+    "The /me Graph routes require a signed-in user and therefore delegated permissions. Application permissions are not supported on /me.",
+    "Personal Microsoft accounts are not supported for these permissions.",
+    "Agent365.Observability.OtelWrite is the delegated permission for the Agent 365 OpenTelemetry exporter. A registered agent instance can use the service-to-service exporter route without that delegated permission.",
+    "CopilotPackages.Read.All requires a Microsoft Agent 365 license and, in the reviewed cloud matrix, is listed for the global service."
+  ],
+  "permissions": [
+    {
+      "name": "CopilotPackages.Read.All",
+      "purpose": "Read the Agent 365 / Copilot package catalog for inventory.",
+      "api": "GET /copilot/admin/catalog/packages",
+      "least_privileged": true,
+      "higher_privileged": ["CopilotPackages.ReadWrite.All"],
+      "delegated": {"supported": true, "admin_consent": true},
+      "application": {"supported": true, "admin_consent": true},
+      "personal_account_supported": false
+    },
+    {
+      "name": "ProtectionScopes.Compute.User",
+      "purpose": "Compute Purview protection scopes for a user.",
+      "api": "POST /users/{userId}/dataSecurityAndGovernance/protectionScopes/compute",
+      "least_privileged": true,
+      "higher_privileged": ["ProtectionScopes.Compute.All"],
+      "delegated": {"supported": true, "admin_consent": true},
+      "application": {"supported": true, "admin_consent": true},
+      "personal_account_supported": false
+    },
+    {
+      "name": "Content.Process.User",
+      "purpose": "Evaluate prompt and response text with processContent.",
+      "api": "POST /users/{userId}/dataSecurityAndGovernance/processContent",
+      "least_privileged": true,
+      "higher_privileged": ["Content.Process.All"],
+      "delegated": {"supported": true, "admin_consent": true},
+      "application": {"supported": true, "admin_consent": true},
+      "personal_account_supported": false
+    },
+    {
+      "name": "ContentActivity.Write",
+      "purpose": "Record a content activity audit event.",
+      "api": "POST /users/{userId}/dataSecurityAndGovernance/activities/contentActivities",
+      "least_privileged": true,
+      "higher_privileged": [],
+      "delegated": {"supported": true, "admin_consent": true},
+      "application": {"supported": true, "admin_consent": true},
+      "personal_account_supported": false
+    },
+    {
+      "name": "Agent365.Observability.OtelWrite",
+      "purpose": "Send OpenTelemetry to Agent 365 on the delegated exporter route.",
+      "api": "Microsoft OpenTelemetry Distro Agent 365 exporter",
+      "least_privileged": true,
+      "higher_privileged": [],
+      "delegated": {"supported": true, "admin_consent": true},
+      "application": {
+        "supported": false,
+        "admin_consent": false,
+        "alternative": "Registered agent instances use the S2S exporter route without this delegated permission."
+      },
+      "personal_account_supported": false
+    }
+  ]
+}

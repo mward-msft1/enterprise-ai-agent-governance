@@ -1,0 +1,10 @@
+// Detection ID: EAG-DET-006
+// Priority: P2
+// Surface: sentinel
+// Schema source: https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/microsoftgraphactivitylogs
+// Confirm this query in the customer workspace before enabling it.
+MicrosoftGraphActivityLogs
+| where TimeGenerated > ago(1d)
+| where RequestUri has "dataSecurityAndGovernance"
+| where ResponseStatusCode !in (200, 201, 202, 204)
+| project TimeGenerated, RequestUri, RequestMethod, ResponseStatusCode, AppId, UserId

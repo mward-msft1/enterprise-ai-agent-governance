@@ -1,0 +1,10 @@
+// Detection ID: EAG-DET-002
+// Priority: P1
+// Surface: sentinel
+// Schema source: https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/signinlogs
+// Confirm this query in the customer workspace before enabling it.
+SigninLogs
+| where TimeGenerated > ago(1d)
+| where AppId == "REPLACE_WITH_APPLICATION_ID"
+| where ResultType != 0 or RiskLevelDuringSignIn has "high" or ConditionalAccessStatus == "failure"
+| project TimeGenerated, UserPrincipalName, AppId, AppDisplayName, IPAddress, ResultType, RiskLevelDuringSignIn, ConditionalAccessStatus, Location, CorrelationId

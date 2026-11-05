@@ -1,0 +1,11 @@
+// Detection ID: EAG-DET-005
+// Priority: P2
+// Surface: sentinel-custom
+// Schema source: deploy/agent-governance-table.json
+// Confirm this query in the customer workspace before enabling it.
+AgentGovernance_CL
+| where TimeGenerated > ago(1d)
+| where Stage == "tool"
+| where ToolName !in ("knowledge_lookup", "policy_status")
+| summarize ToolCalls = count() by AgentId, ToolName, UserId, bin(TimeGenerated, 1h)
+| where ToolCalls > 0

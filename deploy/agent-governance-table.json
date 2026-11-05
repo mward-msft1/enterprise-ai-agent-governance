@@ -1,0 +1,40 @@
+{
+  "table": "AgentGovernance_CL",
+  "owner": "this repository",
+  "microsoft_published": false,
+  "columns": [
+    {
+      "name": "TimeGenerated",
+      "type": "datetime"
+    },
+    {
+      "name": "CorrelationId",
+      "type": "string"
+    },
+    {
+      "name": "AgentId",
+      "type": "string"
+    },
+    {
+      "name": "Stage",
+      "type": "string"
+    },
+    {
+      "name": "Decision",
+      "type": "string"
+    },
+    {
+      "name": "UserId",
+      "type": "string"
+    },
+    {
+      "name": "ToolName",
+      "type": "string"
+    },
+    {
+      "name": "Allowed",
+      "type": "bool"
+    }
+  ],
+  "note": "Create this table with a Data Collection Rule before enabling EAG-DET-004 or EAG-DET-005. Do not assume classic custom-log suffixes."
+}

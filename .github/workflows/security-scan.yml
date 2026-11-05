@@ -1,0 +1,18 @@
+name: Security scan
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Secret pattern scan
+        run: python scripts/secret_scan.py
+      - name: Dependency manifest check
+        run: python scripts/dependency_scan.py

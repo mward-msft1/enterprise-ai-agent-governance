@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+.env
+*.pem
+*.pfx
+customer.local.json
+evidence/tenant/
+dist/
+*.egg-info/
+.DS_Store
